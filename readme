@@ -57,3 +57,464 @@
 
 
 7лаб
+1. **task1(age_str):**
+   - Приймає рядок `age_str`, який має містити числове значення віку.
+   - Конвертує цей рядок у ціле число.
+   - Якщо конвертація успішна, повертає числове значення віку.
+   - Якщо конвертація не вдається (наприклад, через нечислове значення), повертає повідомлення про помилку.
+
+   ```python
+   def task1(age_str):
+       try:
+           age = int(age_str)
+           return age
+       except ValueError:
+           return "Error: Please enter a valid numeric value for age."
+   ```
+
+2. **task2(num1_str, num2_str):**
+   - Приймає два рядки `num1_str` та `num2_str`, які мають містити числові значення.
+   - Конвертує ці рядки у числа з плаваючою комою.
+   - Повертає їхній добуток.
+   - Якщо конвертація не вдається, повертає повідомлення про помилку.
+
+   ```python
+   def task2(num1_str, num2_str):
+       try:
+           num1 = float(num1_str)
+           num2 = float(num2_str)
+           return num1 * num2
+       except ValueError:
+           return "Error: Please enter valid numeric values for numbers."
+   ```
+
+3. **task3(string):**
+   - Приймає рядок `string`.
+   - Перевіряє, чи є аргумент рядком.
+   - Повертає довжину рядка.
+   - Якщо аргумент не є рядком, повертає повідомлення про помилку.
+
+   ```python
+   def task3(string):
+       try:
+           if not isinstance(string, str):
+               raise TypeError
+           return len(string)
+       except TypeError:
+           return "Error: Please enter a string, not a numeric value."
+   ```
+
+4. **task4(num_list):**
+   - Приймає список чисел `num_list`.
+   - Повертає суму всіх чисел у списку.
+   - Якщо елемент списку не є числом, повертає `None`.
+
+   ```python
+   def task4(num_list):
+       try:
+           total = sum(num_list)
+           return total
+       except TypeError:
+           return None
+   ```
+
+5. **task5(data):**
+   - Приймає список кортежів `data`, де кожен кортеж складається з імені та списку оцінок.
+   - Обчислює середню оцінку для кожного учня та повертає список кортежів із середньою оцінкою та ім'ям.
+   - Якщо виникає будь-яка помилка, повертає повідомлення про помилку.
+
+   ```python
+   def task5(data):
+       try:
+           result = []
+           for name, grades in data:
+               average_grade = sum(grades) / len(grades)
+               result.append((average_grade, name))
+           return result
+       except Exception:
+           return "List processing error!"
+   ```
+
+Загалом, ці функції обробляють різні типи даних, виконують конвертацію та обчислення, а також мають механізми обробки помилок для випадків некоректного вводу або інших помилок.
+
+lab 8
+Цей код містить п'ять функцій, які виконують різні операції з JSON даними. Ось детальне пояснення для кожної функції:
+
+### Task 1: JSON Parsing and Data Retrieval
+
+Функція `task1` зчитує JSON файл і повертає список імен людей, чий вік перевищує заданий поріг.
+
+```python
+import json
+
+def task1(file_path, age_threshold):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    names_above_threshold = [person['name'] for person in data if person.get('age', 0) > age_threshold]
+    return names_above_threshold
+```
+
+- **file_path**: Шлях до JSON файлу.
+- **age_threshold**: Поріг віку.
+- Зчитує дані з файлу і перевіряє вік кожної особи. Повертає список імен осіб, чий вік перевищує `age_threshold`.
+
+### Task 2: Data Transformation and JSON Serialization
+
+Функція `task2` записує список даних у JSON файл.
+
+```python
+import json
+
+def task2(data_list, file_path):
+    with open(file_path, 'w') as file:
+        json.dump(data_list, file)
+```
+
+- **data_list**: Список даних, який потрібно записати у файл.
+- **file_path**: Шлях до файлу для запису.
+- Записує `data_list` у JSON форматі у файл.
+
+### Task 3: JSON Schema Validation
+
+Функція `task3` перевіряє, чи відповідають файли JSON заданій схемі, і повертає список файлів, які не відповідають цій схемі.
+
+```python
+import json
+from jsonschema import validate, ValidationError
+
+def task3(schema, file_paths):
+    non_conforming_files = []
+    for file_path in file_paths:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        try:
+            validate(instance=data, schema=schema)
+        except ValidationError:
+            non_conforming_files.append(file_path)
+    return non_conforming_files
+```
+
+- **schema**: Схема JSON для перевірки.
+- **file_paths**: Список шляхів до файлів для перевірки.
+- Перевіряє кожен файл на відповідність схемі. Повертає список файлів, які не відповідають схемі.
+
+### Task 4: Nested JSON Data Handling
+
+Функція `task4` витягує всі значення для заданого ключа з вкладених структур JSON.
+
+```python
+import json
+
+def task4(file_path, key):
+    def extract_key(obj):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k == key:
+                    yield v
+                else:
+                    yield from extract_key(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                yield from extract_key(item)
+
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    values = list(extract_key(data))
+    return values
+```
+
+- **file_path**: Шлях до JSON файлу.
+- **key**: Ключ, значення якого потрібно витягти.
+- Рекурсивно шукає всі значення для даного ключа в JSON структурі і повертає список цих значень.
+
+### Task 5: Updating JSON Data
+
+Функція `task5` оновлює дані у JSON файлі на основі категорії та функції оновлення.
+
+```python
+import json
+
+def task5(file_path, category, update_function):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+
+    for item in data:
+        if item.get('category') == category:
+            update_function(item)
+
+    with open(file_path, 'w') as file:
+        json.dump(data, file)
+```
+
+- **file_path**: Шлях до JSON файлу.
+- **category**: Категорія, за якою відбувається оновлення.
+- **update_function**: Функція, яка застосовується для оновлення об'єктів.
+- Зчитує дані з файлу, застосовує функцію оновлення до об'єктів, що відповідають категорії, та зберігає оновлені дані у файл.
+
+Ці функції дозволяють виконувати різноманітні операції з JSON даними: читання, запис, валідація за схемою, витягування вкладених значень і оновлення даних на основі певних умов.
+
+lab9
+Цей код містить функції для різних задач, які перевіряють рядки на відповідність певним регулярним виразам. Ось детальне пояснення кожної функції та приклади їх використання:
+
+### task1
+Перевіряє, чи складається рядок тільки з малих латинських літер та цифр.
+
+```python
+import re
+
+def task1(s):
+    return bool(re.match(r'^[a-z0-9]+$', s))
+
+print(task1("hello123"))  # True
+print(task1("Hello123"))  # False
+```
+
+### task2
+Перевіряє, чи містить рядок хоча б одну велику латинську літеру.
+
+```python
+def task2(s):
+    return bool(re.search(r'[A-Z]', s))
+
+print(task2("Hello"))  # True
+print(task2("hello"))  # False
+```
+
+### task3
+Перевіряє, чи є рядок дійсною IPv4 адресою.
+
+```python
+def task3(s):
+    return bool(re.match(r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', s))
+
+print(task3("192.168.1.1"))  # True
+print(task3("256.256.256.256"))  # False
+```
+
+### task4
+Перевіряє, чи є рядок дійсним часовим інтервалом у форматі `HH:MM:SS`.
+
+```python
+def task4(s):
+    return bool(re.match(r'^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$', s))
+
+print(task4("12:34:56"))  # True
+print(task4("25:34:56"))  # False
+```
+
+### task5
+Перевіряє, чи є рядок дійсним поштовим індексом США у форматі `#####` або `#####-####`.
+
+```python
+def task5(s):
+    return bool(re.match(r'^\d{5}(-\d{4})?$', s))
+
+print(task5("12345"))  # True
+print(task5("12345-6789"))  # True
+print(task5("123456"))  # False
+```
+
+### task6
+Перевіряє, чи є рядок дійсним ім'ям користувача, що складається з малих латинських літер, цифр, підкреслень і дефісів, довжиною від 6 до 12 символів.
+
+```python
+def task6(s):
+    return bool(re.match(r'^[a-z0-9_-]{6,12}$', s))
+
+print(task6("john_doe-123"))  # True
+print(task6("john"))  # False
+```
+
+### task7
+Перевіряє, чи є рядок дійсним номером кредитної картки, починаючи з 4, 5 або 6, розділеним або не розділеним дефісами.
+
+```python
+def task7(s):
+    return bool(re.match(r'^[4-6]\d{3}-?\d{4}-?\d{4}-?\d{4}$', s))
+
+print(task7("4512-3456-7890-1234"))  # True
+print(task7("3512-3456-7890-1234"))  # False
+```
+
+### task8
+Перевіряє, чи є рядок дійсним номером соціального страхування США у форматі `###-##-####`.
+
+```python
+def task8(s):
+    return bool(re.match(r'^\d{3}-\d{2}-\d{4}$', s))
+
+print(task8("123-45-6789"))  # True
+print(task8("123-456-789"))  # False
+```
+
+### task9
+Перевіряє, чи є рядок дійсним паролем, що містить принаймні одну малу літеру, одну велику літеру, одну цифру і один спеціальний символ, довжиною від 8 символів.
+
+```python
+def task9(s):
+    return bool(re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%])[A-Za-z\d@#$%]{8,}$', s))
+
+print(task9("Passw0rd#"))  # True
+print(task9("password"))  # False
+```
+
+### task10
+Перевіряє, чи є рядок дійсною IPv6 адресою.
+
+```python
+def task10(s):
+    return bool(re.match(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$', s))
+
+print(task10("2001:0db8:85a3:0000:0000:8a2e:0370:7334"))  # True
+print(task10("2001:db8:85a3:0:0:8a2e:370:7334"))  # True
+print(task10("2001:db8:85a3::8a2e:370:7334"))  # True
+print(task10("1200::AB00:1234::2552:7777:1313"))  # False
+```
+
+Ці функції використовують регулярні вирази для перевірки відповідності рядків певним шаблонам, які часто використовуються в повсякденному житті та програмуванні.
+
+lab10
+
+Цей код демонструє кілька важливих концепцій об'єктно-орієнтованого програмування (ООП), таких як створення класів, методів, наслідування, поліморфізм, інкапсуляція та застосування їх на прикладі конкретних завдань.
+
+### Task 1: Створення класу `Student`
+
+Клас `Student` створює об'єкт студента з властивостями `name`, `age` та `grade`.
+
+```python
+class Student:
+    def __init__(self, name, age, grade):
+        self.name = name
+        self.age = age
+        self.grade = grade
+
+# Приклад використання:
+student = Student(name="Ivan", age=30, grade="2")
+print(student.name, student.age, student.grade)
+```
+
+### Task 2: Створення методу `display_info`
+
+Метод `display_info` повертає рядок з інформацією про студента.
+
+```python
+class Student:
+    # (Інші частини класу)
+
+    def display_info(self):
+        return f"Name: {self.name}, Age: {self.age}, Grade: {self.grade}"
+
+# Приклад використання:
+print(student.display_info())
+```
+
+### Task 3: Наслідування
+
+Клас `Animal` та його похідний клас `Dog`. Клас `Dog` успадковує властивості та методи класу `Animal` і додає нову властивість `breed`.
+
+```python
+class Animal:
+    def __init__(self, name, sound):
+        self.name = name
+        self.sound = sound
+
+    def make_sound(self):
+        return f"{self.name}: {self.sound}"
+
+class Dog(Animal):
+    def __init__(self, name, sound, breed):
+        super().__init__(name, sound)
+        self.breed = breed
+
+# Приклад використання:
+animal = Animal(name="Lala", sound="")
+dog = Dog(name="Lala", sound="Auuuuuuuuuu", breed="spitz")
+print(animal.make_sound())
+print(dog.make_sound(), dog.breed)
+```
+
+### Task 4: Поліморфізм
+
+Класи `Bird`, `Sparrow` та `Penguin`. Клас `Bird` має метод `fly`, який перевизначається в класах `Sparrow` і `Penguin`.
+
+```python
+class Bird:
+    def fly(self):
+        return None
+
+class Sparrow(Bird):
+    def fly(self):
+        return "Sparrow flies high"
+
+class Penguin(Bird):
+    def fly(self):
+        return "Penguin cannot fly"
+
+# Приклад використання:
+bird = Bird()
+sparrow = Sparrow()
+penguin = Penguin()
+print(bird.fly())
+print(sparrow.fly())
+print(penguin.fly())
+```
+
+### Task 5: Інкапсуляція
+
+Клас `Encapsulation` демонструє різні рівні доступу до змінних: публічний, приватний і захищений.
+
+```python
+class Encapsulation:
+    def __init__(self, public, _private, __protected):
+        self.public = public
+        self._private = _private
+        self.__protected = __protected
+
+# Приклад використання:
+obj = Encapsulation(1, 2, 3)
+print(obj.public)
+print(obj._private)
+print(obj._Encapsulation__protected)  # Доступ до захищеної змінної через манглінг імен
+# print(obj.__protected)  # Це викличе AttributeError
+```
+
+### Task 6: Клас `Rectangle`
+
+Клас `Rectangle` має метод для обчислення периметру.
+
+```python
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def calculate_perimeter(self):
+        return 2 * (self.width + self.height)
+
+# Приклад використання:
+rectangle = Rectangle(width=5, height=4)
+print(rectangle.calculate_perimeter())
+```
+
+### Task 7: Клас `AverageCalculator`
+
+Клас `AverageCalculator` має метод для обчислення середнього значення чисел у списку.
+
+```python
+class AverageCalculator:
+    def __init__(self, numbers):
+        self.numbers = numbers
+
+    def calculate_average(self):
+        return sum(self.numbers) / len(self.numbers)
+
+# Приклад використання:
+numbers = [5, 10, 15, 20]
+avg_calculator = AverageCalculator(numbers)
+print(avg_calculator.calculate_average())
+```
+
+Цей код демонструє основи ООП і може бути використаний як приклад для навчання або створення більш складних програм.
+
+lab11
+
