@@ -1,1 +1,59 @@
-.
+6 лаб
+1. **`task1(numbers)`**:
+   ```python
+   def task1(numbers):
+       return sum(numbers)
+   ```
+   Ця функція приймає список чисел `numbers` і повертає їх суму за допомогою вбудованої функції `sum`.
+
+2. **`task2(tuple_of_elements)`**:
+   ```python
+   def task2(tuple_of_elements):
+       return len(tuple_of_elements)
+   ```
+   Ця функція приймає кортеж `tuple_of_elements` і повертає кількість елементів у ньому, використовуючи вбудовану функцію `len`.
+
+3. **`task3(numbers_tuple)`**:
+   ```python
+   def task3(numbers_tuple):
+       sorted_numbers = sorted(numbers_tuple, reverse=True)
+       return sorted_numbers[0]
+   ```
+   Ця функція приймає кортеж чисел `numbers_tuple`, сортує його у зворотному порядку (від найбільшого до найменшого) і повертає найбільше число, яке буде першим у відсортованому списку.
+
+4. **`task4(dict_tuple)`**:
+   ```python
+   def task4(dict_tuple):
+       dictionary = dict_tuple[0]
+       return dictionary.get("name", None)
+   ```
+   Ця функція приймає кортеж, першим елементом якого є словник. Вона повертає значення за ключем `"name"` з цього словника. Якщо ключ `"name"` відсутній, функція повертає `None`.
+
+5. **`task5(list_of_tuples)`**:
+   ```python
+   def task5(list_of_tuples):
+       sorted_tuples = sorted(list_of_tuples, key=lambda x: len(x[0]))
+       return sorted_tuples[-1][-1]
+   ```
+   Ця функція приймає список кортежів `list_of_tuples`, сортує їх за довжиною першого елемента кожного кортежу. Після сортування повертає останній елемент кортежу, у якого перший елемент має найбільшу довжину.
+
+6. **`task6(tuple_of_lists)`**:
+   ```python
+   def task6(tuple_of_lists):
+       odd_numbers = [num for sublist in tuple_of_lists for num in sublist if num % 2 != 0]
+       product = 1
+       for num in odd_numbers:
+           product *= num
+       return product
+   ```
+   Ця функція приймає кортеж списків чисел `tuple_of_lists`, витягує всі непарні числа з цих списків, а потім обчислює їх добуток. Якщо непарних чисел немає, поверне 1 (початкове значення добутку).
+
+7. **`task7(tuple_of_tuples)`**:
+   ```python
+   def task7(tuple_of_tuples):
+       return sum(second for first, second in tuple_of_tuples)
+   ```
+   Ця функція приймає кортеж кортежів `tuple_of_tuples`, де кожен внутрішній кортеж має два елементи. Функція повертає суму других елементів з кожного внутрішнього кортежу.
+
+
+7лаб
