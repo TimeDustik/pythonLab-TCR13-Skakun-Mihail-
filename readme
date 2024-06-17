@@ -516,5 +516,109 @@ print(avg_calculator.calculate_average())
 
 Цей код демонструє основи ООП і може бути використаний як приклад для навчання або створення більш складних програм.
 
-lab11
+lab12
+
+Абсолютно! Давайте розберемо цей код Python, який визначає клас `Matrix`, призначений для роботи з матрицями.
+
+**Клас `Matrix`**
+
+Цей клас надає функціональність для створення, маніпуляції та виконання операцій над матрицями.
+
+**Методи класу:**
+
+1. `__init__(self, rows, columns, data=None)`: Конструктор класу.
+   - Ініціалізує об'єкт матриці з заданою кількістю рядків (`rows`) і стовпців (`columns`).
+   - Якщо `data` не надано, створює матрицю, заповнену нулями.
+   - Якщо `data` надано, використовує його як початкові значення матриці.
+
+2. `add_element(self, row, column, value)`: Додає елемент у матрицю.
+   - Перевіряє, чи дійсні вказані координати (`row` і `column`).
+   - Якщо координати дійсні, встановлює значення елемента на `value`.
+   - Якщо координати недійсні, виводить повідомлення про помилку.
+
+3. `sum_of_rows(self)`: Повертає список сум елементів у кожному рядку.
+
+4. `transpose(self)`: Повертає транспоновану матрицю.
+
+5. `multiply_by(self, other)`: Множить поточну матрицю на іншу матрицю (`other`).
+   - Перевіряє, чи розміри матриць сумісні для множення.
+   - Якщо ні, виводить повідомлення про помилку і повертає `None`.
+   - Якщо так, виконує множення матриць і повертає результат.
+
+6. `is_symmetric(self)`: Перевіряє, чи матриця симетрична.
+
+7. `rotate_right(self)`: Повертає матрицю на 90 градусів за годинниковою стрілкою.
+
+8. `flatten(self)`: Повертає одномірний список усіх елементів матриці.
+
+9. `from_list(list_of_lists)`: Статичний метод, який створює матрицю зі списку списків.
+
+10. `diagonal(self)`: Повертає список діагональних елементів матриці (тільки для квадратних матриць).
+
+**Приклад використання:**
+
+У коді надано приклади використання кожного методу класу `Matrix`, демонструючи, як створювати матриці, додавати елементи, виконувати операції та отримувати різні результати.
+
+**Зауваження:**
+
+- Код надає базовий набір операцій для роботи з матрицями.
+- Він може бути розширений додатковими функціями, такими як визначник, обернена матриця, знаходження власних значень тощо.
+
+Якщо у вас є ще якісь запитання щодо цього коду або ви хочете дізнатися про конкретний метод детальніше, не соромтеся запитувати!
+
+
+lab 16
+
+Absolutely! This code defines a task management system using two classes: `Task` and `Schedule`. Let's break down what this code does step-by-step.
+
+**1. The `Task` Class:**
+
+- **Purpose:** Represents a single task with properties like title, description, due date, status, priority, notes, duration, and recurrence.
+
+- **Methods:**
+  - `__init__`: Initializes a task object with its attributes.
+  - `is_due_today`: Checks if the task is due today.
+  - `to_dict`: Converts the task into a dictionary for easy storage/transfer.
+  - `from_dict` (static method): Creates a task object from a dictionary.
+  - `__repr__`: Provides a string representation of the task object for debugging.
+
+**2. The `Schedule` Class:**
+
+- **Purpose:** Manages a collection of tasks, their history, and provides operations like adding, removing, listing, and updating tasks.
+
+- **Methods:**
+  - `__init__`: Initializes an empty schedule.
+  - `add_task`: Adds a task to the schedule.
+  - `remove_task`: Removes a task based on its title.
+  - `get_task`: Retrieves a task by its title.
+  - `list_overdue_tasks`: Lists tasks that are past their due date.
+  - `list_tasks_due_today`: Lists tasks due today.
+  - `sort_tasks_by_due_date`: Sorts tasks by their due date.
+  - `update_task`: Updates attributes of a task.
+  - `mark_as_completed`: Marks a task as completed.
+  - `list_completed_tasks`: Lists completed tasks.
+  - `find_task_by_keyword`: Finds tasks containing a keyword in the title or description.
+  - `check_deadlines`: Lists tasks due tomorrow.
+  - `list_all_tasks`: Lists all tasks in the schedule.
+  - `list_tasks_by_duration`: Lists tasks within a duration range.
+  - `task_history`: Shows the history of operations on tasks.
+  - `clear_completed_tasks`: Removes completed tasks.
+  - `list_recurring_tasks`: Lists tasks that recur.
+  - `set_reminder`: Sets a reminder date for a task (if this functionality is implemented elsewhere).
+  - `completion_percentage`: Calculates the percentage of completed tasks.
+  - `save_to_file`: Saves tasks to a JSON file.
+  - `load_from_file`: Loads tasks from a JSON file.
+
+**Example Usage:**
+
+The code demonstrates how to create tasks, add them to a schedule, list overdue tasks, update a task, mark it as completed, and perform various other operations.
+
+**Key Improvements and Considerations:**
+
+* **Data Persistence:** The code saves and loads tasks to/from a JSON file, allowing the schedule to persist even after the program terminates.
+* **Task Duration:** Tasks now have a duration attribute.
+* **Task Recurrence:** Tasks can be set to recur (although the code doesn't automatically handle recurring task generation).
+* **Reminder Functionality:** The `set_reminder` method is present, but you'll need to implement the actual reminder mechanism (e.g., using notifications) separately.
+
+Let me know if you'd like a deeper explanation of any specific method or concept within this code!
 
